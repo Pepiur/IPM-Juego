@@ -1784,6 +1784,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputText: 
+  text: {fileID: 243955122}
+  calendario: {fileID: 1558550814}
 --- !u!224 &313346912 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5201372926584289467, guid: bc667552ceb62fc49bc9b57296f63c86, type: 3}

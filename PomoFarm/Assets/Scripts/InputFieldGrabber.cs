@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.IO;
 
 public class InputFieldGrabber : MonoBehaviour
 {
@@ -7,17 +8,23 @@ public class InputFieldGrabber : MonoBehaviour
     [Header("the value we got from the input field")]
     [SerializeField] private string inputText;
 
+    [SerializeField] private TMP_InputField text;
+
+    [SerializeField] private Calendar calendario;
+
 
     public void GrabeFromInputField (string input)
     {
         inputText = input;
-        Debug.Log(gameObject.GetComponent<TextMeshPro>().text.);
-        
+        Debug.Log(inputText);
+
+        text.text = "";
     }
 
     public void TakeInfoButton()
     {
-
+        //Debug.Log(text.text);
+        //text.text = "";
     }
 
 }
