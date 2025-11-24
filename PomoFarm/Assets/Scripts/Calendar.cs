@@ -54,6 +54,19 @@ public class Calendar : MonoBehaviour
         }
     }
 
+    public class Evento
+    {
+        public string texto;
+        public int mes;
+        public int anno;
+        public int id;
+    }
+
+    public class Eventos
+    {
+        public Evento[] evento;
+    }
+
     /// <summary>
     /// All the days in the month. After we make our first calendar we store these days in this list so we do not have to recreate them every time.
     /// </summary>
