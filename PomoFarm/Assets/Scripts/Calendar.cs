@@ -94,15 +94,13 @@ public class Calendar : MonoBehaviour
 
     public TextAsset jsonFile;
 
-    public class prueba
-    {
-        public int year;
-    }
+    public TextosEventos contenido;
 
     [Serializable]
     public class Mensaje
     {
-        public string dia;
+        public int dia;
+        public int mes;
         public int id;
         public string mensaje;
     }
@@ -117,8 +115,18 @@ public class Calendar : MonoBehaviour
     {
         UpdateCalendar(DateTime.Now.Year, DateTime.Now.Month);
         listaMensajes = JsonUtility.FromJson<Mensajes>(jsonFile.text);
-        counterId = listaMensajes.mensajes.Count;
-        activeDay = -1;
+
+        if(listaMensajes != null)
+        { 
+            counterId = listaMensajes.mensajes.Count;
+            contenido.updateContend();
+        }
+        else
+        {
+            listaMensajes = new Mensajes();
+            listaMensajes.mensajes = new List<Mensaje>();
+        }
+            activeDay = -1;
     }
 
     /// <summary>
@@ -242,6 +250,7 @@ public class Calendar : MonoBehaviour
     public void GuardarInfo(string input)
     {
         Mensaje msg = new Mensaje();
+        /*
         string dia = activeDay.ToString();
         if (activeDay < 10)
         {
@@ -252,10 +261,13 @@ public class Calendar : MonoBehaviour
         {
             mes = "0" + mes;
         }
-        string key = dia + mes;
-        msg.dia = key;
+        */
+        //string key = dia + mes;
+        msg.dia = activeDay;
+        msg.mes = currDate.Month;
         msg.id = counterId++;
         msg.mensaje = input;
+
         /*
         Mensajes tempMensajes = new Mensajes();
         tempMensajes.mensaje = listaMensajes.mensaje;
@@ -270,5 +282,6 @@ public class Calendar : MonoBehaviour
         string jsonOutput = JsonUtility.ToJson(listaMensajes);
         Debug.Log(jsonOutput);
         File.WriteAllText(Application.dataPath + "/JsonEvento.txt", jsonOutput);
+        contenido.updateContend();
     }
 }
