@@ -37,6 +37,11 @@ public class TextosEventos : MonoBehaviour
     }
     public void deleteHijos()
     {
-           
+        int hijos = this.transform.childCount;
+        for (int i= 0; i < hijos; i++)
+        {
+            Debug.Log(this.transform.GetChild(i).gameObject);
+            Destroy(this.transform.GetChild(i).gameObject);
+        }
     }
 }
