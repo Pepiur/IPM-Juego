@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.IO;
+using JetBrains.Annotations;
 
 public class InputFieldGrabber : MonoBehaviour
 {
@@ -13,18 +14,19 @@ public class InputFieldGrabber : MonoBehaviour
     [SerializeField] private Calendar calendario;
 
 
+    public class Mensaje
+    {
+        public string dia;
+        public int id;
+        public string mensaje;
+    }
+
     public void GrabeFromInputField (string input)
     {
-        inputText = input;
-        Debug.Log(inputText);
-
+        calendario.GuardarInfo(input);
         text.text = "";
     }
 
-    public void TakeInfoButton()
-    {
-        //Debug.Log(text.text);
-        //text.text = "";
-    }
+    
 
 }

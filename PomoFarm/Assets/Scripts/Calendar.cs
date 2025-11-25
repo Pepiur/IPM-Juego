@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
-using UnityEngine.UI;
+using System.Globalization;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 
 public class Calendar : MonoBehaviour
 {
@@ -54,18 +56,6 @@ public class Calendar : MonoBehaviour
         }
     }
 
-    public class Evento
-    {
-        public string texto;
-        public int mes;
-        public int anno;
-        public int id;
-    }
-
-    public class Eventos
-    {
-        public Evento[] evento;
-    }
 
     /// <summary>
     /// All the days in the month. After we make our first calendar we store these days in this list so we do not have to recreate them every time.
@@ -98,10 +88,34 @@ public class Calendar : MonoBehaviour
     /// In start we set the Calendar to the current date
     /// </summary>
     /// 
-    private int activeDay;
+    public int activeDay;
+
+    public int counterId = 0;
+
+    public class Mensaje
+    {
+        public string dia;
+        public int id;
+        public string mensaje;
+    }
+
+    public class Mensajes
+    {
+        public Mensaje[] mensaje;
+    }
+
+    public Mensaje msg = new Mensaje();
+    public Mensajes listaMensajes;
     private void Start()
     {
         UpdateCalendar(DateTime.Now.Year, DateTime.Now.Month);
+        listaMensajes = new Mensajes();
+        listaMensajes.mensaje = new Mensaje[1];
+        listaMensajes.mensaje[0] = new Mensaje();
+        listaMensajes.mensaje[0].dia = "0101";
+        listaMensajes.mensaje[0].id = 0;
+        listaMensajes.mensaje[0].mensaje = "JAJAJAJAJAAJJ";
+        //listaMensajes = JsonUtility.FromJson<Mensajes>(Application.dataPath + "/JsonEvent.txt");
         activeDay = -1;
     }
 
@@ -116,7 +130,7 @@ public class Calendar : MonoBehaviour
         //NumberDay.text = temp.DayOfWeek.ToString() + " " + temp.Day.ToString();
         int startDay = GetMonthStartDay(year, month);
         int endDay = GetTotalNumberOfDays(year, month);
-
+        activeDay = -1;
 
         ///Create the days
         ///This only happens for our first Update Calendar when we have no Day objects therefore we must create them
@@ -221,5 +235,36 @@ public class Calendar : MonoBehaviour
             activeDay = Int32.Parse(dia.text) + GetMonthStartDay(currDate.Year, currDate.Month) - 1;
             days[activeDay].UpdateColor(Color.yellow);
         }
+    }
+
+    public void GuardarInfo(string input)
+    {
+        Mensaje msg = new Mensaje();
+        string dia = activeDay.ToString();
+        if (activeDay < 10)
+        {
+            dia = "0" + dia;
+        }
+        string mes = currDate.Month.ToString();
+        if (currDate.Month < 10)
+        {
+            mes = "0" + mes;
+        }
+        string key = dia + mes;
+        msg.dia = key;
+        msg.id = counterId++;
+        msg.mensaje = input;
+        Mensajes tempMensajes = new Mensajes();
+        tempMensajes.mensaje = listaMensajes.mensaje;
+        listaMensajes.mensaje = new Mensaje[tempMensajes.mensaje.Length + 1];
+        for(int i = 0; i < tempMensajes.mensaje.Length; i++)
+        {
+            listaMensajes.mensaje[i] = tempMensajes.mensaje[i];
+        }
+        listaMensajes.mensaje[tempMensajes.mensaje.Length] = msg;
+        //string jsonOutput = "{" + '\u0022' + key + '\u0022' + ":" + '\u0022' + input + '\u0022' + "}";
+        string jsonOutput = JsonUtility.ToJson(listaMensajes);
+        Debug.Log(jsonOutput);
+        File.WriteAllText(Application.dataPath + "/JsonEvento.txt", jsonOutput);
     }
 }
