@@ -6137,6 +6137,11 @@ MonoBehaviour:
   - {fileID: 1619853330}
   MonthAndYear: {fileID: 332484299}
   NumberDay: {fileID: 0}
+  activeDay: 0
+  counterId: 0
+  jsonFile: {fileID: 4900000, guid: 3aa0637be6e5bdf4f8da7c1018985b0a, type: 3}
+  listaMensajes:
+    mensajes: []
 --- !u!114 &1558550815
 MonoBehaviour:
   m_ObjectHideFlags: 0
