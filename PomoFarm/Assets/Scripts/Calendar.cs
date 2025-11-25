@@ -92,6 +92,7 @@ public class Calendar : MonoBehaviour
 
     public int counterId = 0;
 
+    [Serializable]
     public class Mensaje
     {
         public string dia;
@@ -99,23 +100,17 @@ public class Calendar : MonoBehaviour
         public string mensaje;
     }
 
+    [Serializable]
     public class Mensajes
     {
-        public Mensaje[] mensaje;
+        public List<Mensaje> mensaje;
     }
-
-    public Mensaje msg = new Mensaje();
     public Mensajes listaMensajes;
     private void Start()
     {
         UpdateCalendar(DateTime.Now.Year, DateTime.Now.Month);
-        listaMensajes = new Mensajes();
-        listaMensajes.mensaje = new Mensaje[1];
-        listaMensajes.mensaje[0] = new Mensaje();
-        listaMensajes.mensaje[0].dia = "0101";
-        listaMensajes.mensaje[0].id = 0;
-        listaMensajes.mensaje[0].mensaje = "JAJAJAJAJAAJJ";
-        //listaMensajes = JsonUtility.FromJson<Mensajes>(Application.dataPath + "/JsonEvent.txt");
+        listaMensajes = JsonUtility.FromJson<Mensajes>(Application.dataPath + "/JsonEvent.txt");
+        counterId = listaMensajes.mensaje.Count;
         activeDay = -1;
     }
 
@@ -254,14 +249,16 @@ public class Calendar : MonoBehaviour
         msg.dia = key;
         msg.id = counterId++;
         msg.mensaje = input;
+        /*
         Mensajes tempMensajes = new Mensajes();
         tempMensajes.mensaje = listaMensajes.mensaje;
-        listaMensajes.mensaje = new Mensaje[tempMensajes.mensaje.Length + 1];
-        for(int i = 0; i < tempMensajes.mensaje.Length; i++)
+        listaMensajes.mensaje = new List<Mensaje>();
+        for(int i = 0; i < tempMensajes.mensaje.Count; i++)
         {
             listaMensajes.mensaje[i] = tempMensajes.mensaje[i];
         }
-        listaMensajes.mensaje[tempMensajes.mensaje.Length] = msg;
+        */
+        listaMensajes.mensaje.Add(msg);
         //string jsonOutput = "{" + '\u0022' + key + '\u0022' + ":" + '\u0022' + input + '\u0022' + "}";
         string jsonOutput = JsonUtility.ToJson(listaMensajes);
         Debug.Log(jsonOutput);
