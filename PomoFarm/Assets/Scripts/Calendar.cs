@@ -270,7 +270,7 @@ public class Calendar : MonoBehaviour
             msg.dia = DateTime.Now.Day + GetMonthStartDay(DateTime.Now.Year, DateTime.Now.Month) - 1;
         }
         msg.mes = currDate.Month;
-        msg.id = counterId++;
+        msg.id = ++counterId;
         msg.mensaje = input;
         msg.anno = currDate.Year;
         /*

@@ -31,7 +31,7 @@ public class TextosEventos : MonoBehaviour
             int anno = calendario.listaMensajes.mensajes[i].anno;
             int dia = calendario.listaMensajes.mensajes[i].dia - calendario.GetMonthStartDay(anno, mes) + 1;
             string msg = calendario.listaMensajes.mensajes[i].mensaje;
-            int id = i;
+            int id = i + 1;
             evento.GetComponent<TMP_Text>().text = "Evento " + id.ToString() + " del día " + dia.ToString() + "/" + mes.ToString() + "/" + anno.ToString() + ": " + msg; 
             
         }

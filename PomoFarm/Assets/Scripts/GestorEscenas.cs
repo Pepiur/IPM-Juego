@@ -36,6 +36,11 @@ public class GestorScenas : MonoBehaviour
     {
         SceneManager.LoadScene(6);
     }
+
+    public void Salir()
+    {
+        Application.Quit();
+    }
     public void DestuirObjeto()
     {
         tiempo = FindObjectOfType<TimeData>();
