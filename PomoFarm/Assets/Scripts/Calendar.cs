@@ -101,6 +101,7 @@ public class Calendar : MonoBehaviour
     {
         public int dia;
         public int mes;
+        public int anno;
         public int id;
         public string mensaje;
     }
@@ -195,7 +196,7 @@ public class Calendar : MonoBehaviour
     /// <summary>
     /// This returns which day of the week the month is starting on
     /// </summary>
-    int GetMonthStartDay(int year, int month)
+    public int GetMonthStartDay(int year, int month)
     {
         DateTime temp = new DateTime(year, month, 1);
 
@@ -231,8 +232,7 @@ public class Calendar : MonoBehaviour
 
     public void ActtivarDia(TMP_Text dia)
     {
-        Debug.Log(dia.text);
-        if(dia.ToString() != "")
+        if(dia.text.ToString() != "")
         {
             if (activeDay >= 0)
             {
@@ -263,11 +263,16 @@ public class Calendar : MonoBehaviour
         }
         */
         //string key = dia + mes;
+
         msg.dia = activeDay;
+        if (activeDay < 0)
+        {
+            msg.dia = DateTime.Now.Day + GetMonthStartDay(DateTime.Now.Year, DateTime.Now.Month) - 1;
+        }
         msg.mes = currDate.Month;
         msg.id = counterId++;
         msg.mensaje = input;
-
+        msg.anno = currDate.Year;
         /*
         Mensajes tempMensajes = new Mensajes();
         tempMensajes.mensaje = listaMensajes.mensaje;

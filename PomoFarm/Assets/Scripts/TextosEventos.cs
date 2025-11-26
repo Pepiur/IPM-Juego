@@ -27,11 +27,12 @@ public class TextosEventos : MonoBehaviour
         {
             GameObject evento;
             evento = Instantiate(eventos, this.transform.position, Quaternion.identity, this.transform);
-            int dia = calendario.listaMensajes.mensajes[i].dia;
             int mes = calendario.listaMensajes.mensajes[i].mes;
+            int anno = calendario.listaMensajes.mensajes[i].anno;
+            int dia = calendario.listaMensajes.mensajes[i].dia - calendario.GetMonthStartDay(anno, mes) + 1;
             string msg = calendario.listaMensajes.mensajes[i].mensaje;
             int id = i;
-            evento.GetComponent<TMP_Text>().text = "Evento " + id.ToString() + " del día " + dia.ToString() + "/" + mes.ToString() + ": " + msg; 
+            evento.GetComponent<TMP_Text>().text = "Evento " + id.ToString() + " del día " + dia.ToString() + "/" + mes.ToString() + "/" + anno.ToString() + ": " + msg; 
             
         }
     }
