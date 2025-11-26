@@ -1,13 +1,40 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class BotonesTiempo : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public TimeData timeData;
 
-    [SerializeField] private int valorTimer = 0;
-    public int Tiempo;
-    public void SetTimer()
+    public Button sumarMin;
+    public Button restarMin;
+    public Button sumarSeg;
+    public Button restarSeg;
+
+    public TextMeshProUGUI displayTiempo;
+
+    void Start()
     {
-        Tiempo = valorTimer;
+        sumarMin.onClick.AddListener(() => { timeData.minutos++; ActualizarTexto(); });
+        restarMin.onClick.AddListener(() => { timeData.minutos = Mathf.Max(0, timeData.minutos - 1); ActualizarTexto(); });
+
+        sumarSeg.onClick.AddListener(() =>
+        {
+            timeData.segundos = (timeData.segundos + 1) % 60;
+            ActualizarTexto();
+        });
+
+        restarSeg.onClick.AddListener(() =>
+        {
+            timeData.segundos = (timeData.segundos - 1 + 60) % 60;
+            ActualizarTexto();
+        });
+
+        ActualizarTexto();
+    }
+
+    void ActualizarTexto()
+    {
+        displayTiempo.text = $"{timeData.minutos:00}:{timeData.segundos:00}";
     }
 }
